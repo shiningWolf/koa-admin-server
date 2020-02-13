@@ -9,6 +9,19 @@ class DB{
             this._db = db;
         });
     }
+
+    search(tableName,condition = {}){  //查询数据库
+        return new Promise((reolve,reject)=>{
+            let dbo = this._db.db("runoob");
+            dbo.collection(tableName).find(condition).toArray(function(err, result) { // 返回集合中所有数据
+                if (err) {
+                    reject()
+                }else{
+                    reolve(result)
+                }
+            });
+        })
+    }
 }
 const db = new DB();
 module.exports = db;
