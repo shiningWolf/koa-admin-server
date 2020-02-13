@@ -7,7 +7,8 @@
 var app = require('../app');
 var debug = require('debug')('demo:server');
 var http = require('http');
-
+const db = require('../db');
+db.init(); //连接数据库
 /**
  * Get port from environment and store in Express.
  */
