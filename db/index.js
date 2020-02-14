@@ -41,9 +41,22 @@ class DB{
         return new Promise((resolve,reject)=>{
             let dbo = this._db.db("runoob");
             let updateStr = {$set: data};
-            dbo.collection(tableName).updateOne({_id:ObjectID(id)},updateStr,(err,res)=>{
+            dbo.collection(tableName).updateOne({_id:id},updateStr,(err,res)=>{
                 if (err) {
                     console.log('update',err)
+                    reject()
+                }else {
+                    resolve()
+                }
+            })
+        })
+    }
+
+    delete(tableName,id){ //删除数据
+        return new Promise((resolve,reject)=>{
+            let dbo = this._db.db("runoob");
+            dbo.collection(tableName).deleteOne({_id:id},(err)=>{
+                if (err) {
                     reject()
                 }else {
                     resolve()
