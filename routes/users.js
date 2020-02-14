@@ -2,6 +2,7 @@ const router = require('koa-router')()
 const db = require('../db')
 const ObjectID = require('mongodb').ObjectID;
 const ERRCODE = 500;
+
 router.prefix('/dev-api/vue-admin-template')
 
 router.post('/user/login', async function (ctx, next) {
@@ -58,7 +59,22 @@ router.post('/branchmanage/update', async function (ctx, next) {
   let id = body._id;
   delete body._id;
   try {
-    let result = await db.update('branches',id,body);
+    let result = await db.update('branches',ObjectID(id),body);
+    ctx.body = {
+      code:20000
+    }
+  } catch(e) {
+    ctx.body = {
+      code:ERRCODE
+    }
+  }
+})
+
+router.post('/branchmanage/delete', async function (ctx, next) {
+  let body = ctx.request.body;
+  let id = body._id;
+  try {
+    await db.delete('branches',ObjectID(id));
     ctx.body = {
       code:20000
     }
