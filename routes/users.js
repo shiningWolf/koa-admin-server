@@ -26,6 +26,15 @@ router.get('/user/info', async function (ctx, next) {
   }
 })
 
+router.get('/user/logout', async function (ctx, next) {
+  ctx.body = {
+    code:20000,
+    data: {
+      ok:true
+    }
+  }
+})
+
 router.get('/branchmanage/list', async function (ctx, next) {
   try {
     let result = await db.search('branches');
