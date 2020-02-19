@@ -1,5 +1,5 @@
 const router = require('koa-router')()
-
+// 统一输出所有的路由
 router.get('/', async (ctx, next) => {
   await ctx.render('index', {
     title: 'Hello Koa 2!'

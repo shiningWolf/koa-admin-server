@@ -5,9 +5,8 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
+const fs = require('fs')
 
-const index = require('./routes/index')
-const users = require('./routes/users')
 
 // error handler
 onerror(app)
@@ -33,8 +32,11 @@ app.use(async (ctx, next) => {
 })
 
 // routes
-app.use(index.routes(), index.allowedMethods())
-app.use(users.routes(), users.allowedMethods())
+const routerFiles = fs.readdirSync('../routes')
+routerFiles.forEach(v => {
+  let route = require('./routes/' + v)
+  app.use(route.routes(), route.allowedMethods())
+})
 
 // error-handling
 app.on('error', (err, ctx) => {
